@@ -116,6 +116,29 @@ jobs:
                   core.setFailed(error.message);
                 }
 
+    - name: Create workspace
+      id: create_workspace
+      run: |
+                  cat > payload.json <<EOF
+                  {
+                    "data": {
+                      "attributes": {
+                        "name": "${{ github.event.repository.name }}",
+                        "auto-apply": "true"
+                      },
+                      "type": "workspaces"
+                    }
+                  }
+                  EOF
+                  curl \
+                  --header "Authorization: Bearer ${{ secrets.TFE_TOKEN }}" \
+                  --header "Content-Type: application/vnd.api+json" \
+                  --request POST \
+                  --data @payload.json \
+                  --output output.txt \
+                  https://app.terraform.io/api/v2/organizations/${{ vars.TF_ORGANIZATION }}/workspaces
+                  echo "workspace_id=$(cat output.txt | jq -r '.[].id')" >> $GITHUB_OUTPUT
+
     - name: Create Apply Run
       uses: hashicorp/tfc-workflows-github/actions/create-run@v1.1.1
       id: apply-run
