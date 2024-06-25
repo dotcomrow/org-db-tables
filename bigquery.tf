@@ -15,11 +15,11 @@ module "schemas" {
   depends_on = [google_bigquery_dataset.database]
 }
 
-resource "null_resource" "build_schema" {
+# resource "null_resource" "build_schema" {
 
-  triggers = {
-    always_run = "${timestamp()}"
-  }
+#   triggers = {
+#     always_run = "${timestamp()}"
+#   }
 
 #   provisioner "local-exec" {
 #     # environment = {
