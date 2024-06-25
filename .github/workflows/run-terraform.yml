@@ -119,8 +119,8 @@ jobs:
     - name: Create workspace
       id: create_workspace
       run: |
-          cat > payload.json <<EOF
-          {
+        cat > payload.json <<EOF
+        {
             "data": {
             "attributes": {
             "name": "${{ github.event.repository.name }}",
@@ -129,7 +129,7 @@ jobs:
               "type": "workspaces"
               }
             }
-            EOF
+        EOF
             curl \
               --header "Authorization: Bearer ${{ secrets.TFE_TOKEN }}" \
               --header "Content-Type: application/vnd.api+json" \
