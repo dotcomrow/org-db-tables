@@ -57,20 +57,20 @@ variable "bucket_name" {
   nullable = false
 }
 
-variable "r2_access_key_id" {
-  description = "value of the r2 access key id"
-  type        = string
-  nullable = false
-}
+# variable "r2_access_key_id" {
+#   description = "value of the r2 access key id"
+#   type        = string
+#   nullable = false
+# }
 
-variable "r2_secret_access_key" {
-  description = "value of the r2 secret access key"
-  type        = string
-  nullable = false
-}
+# variable "r2_secret_access_key" {
+#   description = "value of the r2 secret access key"
+#   type        = string
+#   nullable = false
+# }
 
-variable "r2_account_id" {
-  description = "value of the r2 account id"
-  type        = string
-  nullable = false
-}
+# variable "r2_account_id" {
+#   description = "value of the r2 account id"
+#   type        = string
+#   nullable = false
+# }
