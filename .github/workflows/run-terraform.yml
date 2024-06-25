@@ -140,9 +140,17 @@ jobs:
               cat output.txt
             echo "workspace_id=$(cat output.txt | jq -r '.[].id')" >> $GITHUB_OUTPUT
 
+    - uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.1.1
+      id: upload
+      with:
+              workspace: ${{ github.event.repository.name }}
+              directory: release
+
     - name: Create Apply Run
       uses: hashicorp/tfc-workflows-github/actions/create-run@v1.1.1
       id: apply-run
       if: success() || failure()
       with:
-            workspace: ${{ github.event.repository.name }}
+        workspace: ${{ github.event.repository.name }}
+        configuration_version: ${{ steps.upload.outputs.configuration_version_id }}
+        plan_only: false
