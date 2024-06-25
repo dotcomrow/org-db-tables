@@ -95,26 +95,26 @@ jobs:
     - name: Create release
       uses: "actions/github-script@v6"
       env:
-            VERSION: ${{ steps.version.outputs.version }}
+        VERSION: ${{ steps.version.outputs.version }}
       with:
-              github-token: "${{ github.token }}"
-              script: |
-                try {
-                  const response = await github.rest.repos.createRelease({
-                    draft: false,
-                    generate_release_notes: true,
-                    name: process.env.VERSION,
-                    owner: context.repo.owner,
-                    prerelease: false,
-                    repo: context.repo.repo,
-                    tag_name: process.env.VERSION,
-                    target_commitish: 'release'
-                  });
-                  core.exportVariable('RELEASE_ID', response.data.id);
-                  core.exportVariable('RELEASE_UPLOAD_URL', response.data.upload_url);
-                } catch (error) {
-                  core.setFailed(error.message);
-                }
+        github-token: "${{ github.token }}"
+        script: |
+            try {
+              const response = await github.rest.repos.createRelease({
+                draft: false,
+                generate_release_notes: true,
+                name: process.env.VERSION,
+                owner: context.repo.owner,
+                prerelease: false,
+                repo: context.repo.repo,
+                tag_name: process.env.VERSION,
+                target_commitish: 'release'
+              });
+              core.exportVariable('RELEASE_ID', response.data.id);
+              core.exportVariable('RELEASE_UPLOAD_URL', response.data.upload_url);
+            } catch (error) {
+              core.setFailed(error.message);
+            }
 
     - name: Create workspace
       id: create_workspace
