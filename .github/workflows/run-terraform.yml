@@ -9,6 +9,9 @@ permissions: write-all
 
 jobs:
   terraform:
+    env:
+        TF_CLOUD_ORGANIZATION: ${{ vars.TF_ORGANIZATION }}
+        TF_API_TOKEN: ${{ secrets.TFE_TOKEN }}
     name: 'Terraform'
     runs-on: ubuntu-latest
 
@@ -16,7 +19,6 @@ jobs:
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v3
-
 
     - name: Delete current release branch
       uses: dawidd6/action-delete-branch@v3
@@ -35,7 +37,7 @@ jobs:
       with:
         ref: release
         path: release
-
+  
     - name: Get next version
       uses: reecetech/version-increment@2023.9.3
       id: version
@@ -114,6 +116,4 @@ jobs:
       id: apply-run
       if: success() || failure()
       with:
-            workspace: ${{ vars.TFE_WORKSPACE }}
-            organization: ${{ vars.TF_ORGANIZATION }}
-            token: ${{ secrets.TFE_TOKEN }}
+            workspace: ${{ github.event.repository.name }}

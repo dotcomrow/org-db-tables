@@ -1,9 +1,3 @@
-variable "region" {
-  type        = string
-  description = "The region to create the project in"
-  nullable = false
-}
-
 variable "project_name" {
   description = "The name of the project to create"
   type        = string
@@ -12,18 +6,6 @@ variable "project_name" {
 
 variable "gcp_org_id" {
   description = "The organization id to create the project under"
-  type        = string
-  nullable = false
-}
-
-variable "bigquery_secret" {
-  description = "Bigquery secret to use for the service account"
-  type        = string
-  nullable = false
-}
-
-variable "authentication_secret" {
-  description = "Authentication secret to use for the service account"
   type        = string
   nullable = false
 }
@@ -57,12 +39,6 @@ variable "project_id" {
   nullable = false
 }
 
-variable "python_session_secret"  {
-  description = "Python session secret for cloud run"
-  type       = string
-  nullable = false
-}
-
 variable "common_project_id" {
   description = "Common resources project id"
   type        = string
@@ -71,24 +47,6 @@ variable "common_project_id" {
 
 variable "cloudflare_account_id" {
   description = "Cloudflare account id"
-  type        = string
-  nullable = false
-}
-
-# variable "cloudflare_worker_namespace_id" {
-#   description = "Cloudflare worker namespace id"
-#   type        = string
-#   nullable = false
-# }
-
-variable "registry_name" {
-  description = "Registry name"
-  type        = string
-  nullable = false
-}
-
-variable "audience" {
-  description = "Audience for the auth service"
   type        = string
   nullable = false
 }

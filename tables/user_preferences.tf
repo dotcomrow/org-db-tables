@@ -1,25 +1,19 @@
-resource "google_bigquery_table" "customer_group" {
+resource "google_bigquery_table" "user_preferences" {
   dataset_id = var.dataset_id
-  table_id   = "customer_group"
+  table_id   = "user_preferences"
   deletion_protection = false
   project                     = var.project_id
   schema = <<EOF
 [
   {
     "mode": "REQUIRED",
-    "name": "customer_group_id",
-    "type": "INTEGER"
-  },
-  {
-    "defaultValueExpression": "GENERATE_UUID()",
-    "mode": "REQUIRED",
-    "name": "uuid",
+    "name": "account_id",
     "type": "STRING"
   },
   {
     "mode": "REQUIRED",
-    "name": "group_name",
-    "type": "STRING"
+    "name": "preferences",
+    "type": "JSON"
   },
   {
     "defaultValueExpression": "CURRENT_TIMESTAMP",
@@ -33,4 +27,10 @@ resource "google_bigquery_table" "customer_group" {
   }
 ]
 EOF
+
+  table_constraints {
+    primary_key {
+      columns = ["account_id"]
+  }
 }
+

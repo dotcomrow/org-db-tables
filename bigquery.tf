@@ -1,4 +1,4 @@
-resource "google_bigquery_dataset" "ecomm" {
+resource "google_bigquery_dataset" "database" {
   dataset_id  = "${var.project_name}_dataset"
   description = "Dataset for ${var.project_name} project"
   location    = "US"
@@ -10,9 +10,9 @@ resource "google_bigquery_dataset" "ecomm" {
 module "schemas" {
   source     = "./tables"
   project_id = var.project_id
-  dataset_id = google_bigquery_dataset.ecomm.dataset_id
+  dataset_id = google_bigquery_dataset.database.dataset_id
 
-  depends_on = [google_bigquery_dataset.ecomm]
+  depends_on = [google_bigquery_dataset.database]
 }
 
 resource "null_resource" "build_schema" {
@@ -21,12 +21,12 @@ resource "null_resource" "build_schema" {
     always_run = "${timestamp()}"
   }
 
-  provisioner "local-exec" {
-    # environment = {
-    #   STORAGE_ADMIN_CREDENTIALS = "${var.cloud_storage_admin}"
-    # }
-    command = "${path.module}/scripts/build_graphql_schema.sh ${var.project_id} ${google_bigquery_dataset.ecomm.dataset_id} ${var.bucket_name} ${var.r2_account_id} ${var.r2_access_key_id} ${var.r2_secret_access_key}"
-  }
+#   provisioner "local-exec" {
+#     # environment = {
+#     #   STORAGE_ADMIN_CREDENTIALS = "${var.cloud_storage_admin}"
+#     # }
+#     command = "${path.module}/scripts/build_graphql_schema.sh ${var.project_id} ${google_bigquery_dataset.ecomm.dataset_id} ${var.bucket_name} ${var.r2_account_id} ${var.r2_access_key_id} ${var.r2_secret_access_key}"
+#   }
 
-  depends_on = [module.schemas]
-}
+#   depends_on = [module.schemas]
+# }
